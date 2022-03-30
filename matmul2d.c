@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
   int i, j, k;
   int root = 0;
   
-  MPI_Status status;
-  
   MPI_Init (&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &comm_size);
@@ -33,7 +31,7 @@ int main(int argc, char *argv[])
 
 
   from = my_rank * MAXSIZE/comm_size;
-  to = (my_rank+1) * MAXSIZE/comm_size;
+  to = (my_rank+comm_size) * MAXSIZE/comm_size;
 
   /* Root process will fills the input matrices X and Y*/
   MPI_Bcast (Y, MAXSIZE*MAXSIZE, MPI_INT, root, MPI_COMM_WORLD);
